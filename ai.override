@@ -1,12 +1,12 @@
-name: AI 节点
-desc: 筛选节点并自定义 AI 规则
+name: AI-专线规则
+desc: 把含“专线”且属于日/新/美线路的节点拉进一个测速组
 
 proxy-groups:
-  - name: 🇭🇰 AI-Auto
+  - name: 🌐 专线- AI    
     type: url-test
     interval: 300
-    include-all: true             
-    filter: '(专线.*(JP|Japan|🇯🇵|日本|SG|Singapore|🇸🇬|新加坡|US|United ?States|🇺🇸|美国))|((JP|Japan|🇯🇵|日本|SG|Singapore|🇸🇬|新加坡|US|United ?States|🇺🇸|美国).*专线)'
+    include-all: true       
+    filter: '(专线.*(日本|新加坡|美国|JP|Japan|SG|Singapore|US|United ?States|🇯🇵|🇸🇬|🇺🇸))|((日本|新加坡|美国|JP|Japan|SG|Singapore|US|United ?States|🇯🇵|🇸🇬|🇺🇸).*专线)'
 
 rules:
-  - DOMAIN-SUFFIX,gemini.google.com,🇭🇰 AI-Auto 
+  - DOMAIN-SUFFIX,gemini.google.com,🌐 专线- AI
