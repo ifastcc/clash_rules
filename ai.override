@@ -1,0 +1,12 @@
+name: AI 节点
+desc: 筛选节点并自定义 AI 规则
+
+proxy-groups:
+  - name: 🇭🇰 AI-Auto
+    type: url-test
+    interval: 300
+    include-all: true             
+    filter: '(专线.*(JP|Japan|🇯🇵|日本|SG|Singapore|🇸🇬|新加坡|US|United ?States|🇺🇸|美国))|((JP|Japan|🇯🇵|日本|SG|Singapore|🇸🇬|新加坡|US|United ?States|🇺🇸|美国).*专线)'
+
+rules:
+  - DOMAIN-SUFFIX,gemini.google.com,🇭🇰 AI-Auto 
