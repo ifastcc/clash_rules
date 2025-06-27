@@ -1,15 +1,15 @@
-# 改名为：ai.stoverride  （扩展名很关键！）
+# 文件名：ai.stoverride
 name: AI-专线规则
-desc: 把含“专线”且属于日/新/美线路的节点拉进一个测速组
+desc: 把含"专线"且属于日/新/美线路的节点拉进一个测速组
 
 proxy-groups:
-  - name: 专线-AI              # 建议去掉空格，保证显示一致
+  - name: 专线-AI
     type: url-test
     interval: 300
-    include-all: true          # 官方文档确认支持 [stash.wiki](https://stash.wiki/proxy-protocols/proxy-groups)
+    include-all: true
     filter: >
       (专线.*(日本|新加坡|美国|JP|Japan|SG|Singapore|US|United ?States))|
       ((日本|新加坡|美国|JP|Japan|SG|Singapore|US|United ?States).*专线)
 
 rules:
-  - DOMAIN-SUFFIX,gemini.google.com,专线-AI
+  - DOMAIN-SUFFIX,gemini.google.com,专线-AI 
