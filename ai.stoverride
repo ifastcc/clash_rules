@@ -13,4 +13,6 @@ proxy-groups:
 
 rules:
   - DOMAIN-SUFFIX,gemini.google.com,专线-AI 
+  - DOMAIN-KEYWORD,google,专线-AI 
+
 
