@@ -1,8 +1,9 @@
 # 文件名：ai.stoverride
 name: AI-专线规则
-desc: 含“专线”且位于日/新/美的节点作为测速组；将 Google/Gemini 全量域名走专线
+desc: AI 与 港区 Streaming 各走其专线
 
 proxy-groups:
+  # ==== AI: 日本/新加坡/美国 ====
   - name: 专线-AI
     type: url-test
     interval: 300
@@ -11,23 +12,49 @@ proxy-groups:
       (专线.*(日本|新加坡|美国|JP|Japan|SG|Singapore|US|United ?States))|
       ((日本|新加坡|美国|JP|Japan|SG|Singapore|US|United ?States).*专线)
 
+  # ==== Streaming: 香港 ====
+  - name: 专线-HK
+    type: url-test
+    interval: 300
+    include-all: true
+    filter: >
+      (专线.*(香港|HK|Hong ?Kong))|
+      ((香港|HK|Hong ?Kong).*专线)
+
 rules:
-  # ==== 强相关（可留，也可依赖下面的泛匹配）====
+  ########################################################################
+  # ❶ Gemini / Google AI（走 专线-AI）
+  ########################################################################
   - DOMAIN-SUFFIX,gemini.google.com,专线-AI
   - DOMAIN-SUFFIX,generativelanguage.googleapis.com,专线-AI
   - DOMAIN-SUFFIX,cloudaicompanion.googleapis.com,专线-AI
 
-  # ==== 四大后缀：基本全覆盖（建议保留）====
+  # 四大后缀 —— 全量 Google AI、Workspace、Drive、Search 等
   - DOMAIN-SUFFIX,googleapis.com,专线-AI
   - DOMAIN-SUFFIX,googleusercontent.com,专线-AI
   - DOMAIN-SUFFIX,gstatic.com,专线-AI
   - DOMAIN-SUFFIX,google.com,专线-AI
 
-  # ==== 非四后缀但常用的 Google/YouTube/CDN/埋点 ====
+  ########################################################################
+  # ❷ YouTube / Google Video（走 专线-HK）
+  ########################################################################
+  - DOMAIN-SUFFIX,youtube.com,专线-HK
+  - DOMAIN-SUFFIX,ytimg.com,专线-HK
+  - DOMAIN-SUFFIX,googlevideo.com,专线-HK
+  - DOMAIN-KEYWORD,youtube,专线-HK     # 兜底，匹配 youtu.be 等短链
+
+  ########################################################################
+  # ❸ X (Twitter)（走 专线-HK）
+  ########################################################################
+  - DOMAIN-SUFFIX,x.com,专线-HK
+  - DOMAIN-SUFFIX,t.co,专线-HK
+  - DOMAIN-SUFFIX,twimg.com,专线-HK
+
+  ########################################################################
+  # ❹ 其他常见 Google / CDN / 埋点（默认仍走 专线-AI，可按需调整）
+  ########################################################################
   - DOMAIN-SUFFIX,withgoogle.com,专线-AI
   - DOMAIN-SUFFIX,ggpht.com,专线-AI
-  - DOMAIN-SUFFIX,youtube.com,专线-AI
-  - DOMAIN-SUFFIX,ytimg.com,专线-AI
   - DOMAIN-SUFFIX,googletagmanager.com,专线-AI
   - DOMAIN-SUFFIX,google-analytics.com,专线-AI
   - DOMAIN-SUFFIX,googlesyndication.com,专线-AI
@@ -36,10 +63,12 @@ rules:
   - DOMAIN-SUFFIX,g.co,专线-AI
   - DOMAIN-SUFFIX,goo.gl,专线-AI
 
-  # ==== （可选）中国区镜像域，部分客户端会触发 ====
+  # （可选）中国区镜像域
   - DOMAIN-SUFFIX,googleapis.cn,专线-AI
   - DOMAIN-SUFFIX,gstatic.cn,专线-AI
   - DOMAIN-SUFFIX,google.cn,专线-AI
 
-  # ==== 兜底（想更“狠”就开，不想误伤就关）====
+  ########################################################################
+  # ❺ 泛匹配兜底（如不想误伤，可关闭）
+  ########################################################################
   - DOMAIN-KEYWORD,google,专线-AI
