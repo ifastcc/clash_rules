@@ -1,6 +1,6 @@
 # 文件名：ai.stoverride
 name: AI-专线规则
-desc: 把含"专线"且属于日/新/美线路的节点拉进一个测速组
+desc: 含“专线”且位于日/新/美的节点作为测速组；将 Google/Gemini 全量域名走专线
 
 proxy-groups:
   - name: 专线-AI
@@ -12,7 +12,34 @@ proxy-groups:
       ((日本|新加坡|美国|JP|Japan|SG|Singapore|US|United ?States).*专线)
 
 rules:
-  - DOMAIN-SUFFIX,gemini.google.com,专线-AI 
-  - DOMAIN-KEYWORD,google,专线-AI 
+  # ==== 强相关（可留，也可依赖下面的泛匹配）====
+  - DOMAIN-SUFFIX,gemini.google.com,专线-AI
+  - DOMAIN-SUFFIX,generativelanguage.googleapis.com,专线-AI
+  - DOMAIN-SUFFIX,cloudaicompanion.googleapis.com,专线-AI
 
+  # ==== 四大后缀：基本全覆盖（建议保留）====
+  - DOMAIN-SUFFIX,googleapis.com,专线-AI
+  - DOMAIN-SUFFIX,googleusercontent.com,专线-AI
+  - DOMAIN-SUFFIX,gstatic.com,专线-AI
+  - DOMAIN-SUFFIX,google.com,专线-AI
 
+  # ==== 非四后缀但常用的 Google/YouTube/CDN/埋点 ====
+  - DOMAIN-SUFFIX,withgoogle.com,专线-AI
+  - DOMAIN-SUFFIX,ggpht.com,专线-AI
+  - DOMAIN-SUFFIX,youtube.com,专线-AI
+  - DOMAIN-SUFFIX,ytimg.com,专线-AI
+  - DOMAIN-SUFFIX,googletagmanager.com,专线-AI
+  - DOMAIN-SUFFIX,google-analytics.com,专线-AI
+  - DOMAIN-SUFFIX,googlesyndication.com,专线-AI
+  - DOMAIN-SUFFIX,doubleclick.net,专线-AI
+  - DOMAIN-SUFFIX,app-analytics-services.com,专线-AI
+  - DOMAIN-SUFFIX,g.co,专线-AI
+  - DOMAIN-SUFFIX,goo.gl,专线-AI
+
+  # ==== （可选）中国区镜像域，部分客户端会触发 ====
+  - DOMAIN-SUFFIX,googleapis.cn,专线-AI
+  - DOMAIN-SUFFIX,gstatic.cn,专线-AI
+  - DOMAIN-SUFFIX,google.cn,专线-AI
+
+  # ==== 兜底（想更“狠”就开，不想误伤就关）====
+  - DOMAIN-KEYWORD,google,专线-AI
