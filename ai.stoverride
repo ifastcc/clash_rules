@@ -5,7 +5,7 @@ desc: AI 与 港区 Streaming 各走其专线
 proxy-groups:
   # ==== AI: 日本/新加坡/美国 ====
   - name: 专线-AI
-    type: url-test
+    type: select
     interval: 300
     include-all: true
     filter: >
@@ -14,7 +14,7 @@ proxy-groups:
 
   # ==== Streaming: 香港 ====
   - name: 专线-HK
-    type: url-test
+    type: select
     interval: 300
     include-all: true
     filter: >
