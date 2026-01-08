@@ -26,6 +26,11 @@ rules:
   # ❶ Gemini / Google AI（走 专线-AI）
   ########################################################################
   - DOMAIN-SUFFIX,teracloud.jp,专线-HK
+  - DOMAIN-SUFFIX,quora.com,专线-AI
+  - DOMAIN-SUFFIX,poe.com,专线-AI
+  - DOMAIN-SUFFIX,poecdn.net,专线-AI
+
+
 
   - DOMAIN-SUFFIX,gemini.google.com,专线-AI
   - DOMAIN-SUFFIX,generativelanguage.googleapis.com,专线-AI
