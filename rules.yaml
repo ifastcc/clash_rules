@@ -1,0 +1,69 @@
+# Clash Verge Rules 配置 - Windows 适配版
+# https://github.com/ifastcc/clash_rules
+# 
+# 说明：
+# - 使用 PROCESS-NAME 替代 PROCESS-PATH 以保持跨平台兼容
+# - Windows 进程名需包含 .exe 后缀
+# - 代理组名称需与订阅中的组名匹配
+
+prepend:
+  # ==================== 域名规则 ====================
+  - 'DOMAIN-SUFFIX,teracloud.jp,悠兔'
+  - 'DOMAIN-SUFFIX,88code.org,DIRECT'
+  - 'DOMAIN-SUFFIX,privnode.com,DIRECT'
+  - 'DOMAIN-SUFFIX,ikuncode.cc,DIRECT'
+  - 'DOMAIN-SUFFIX,chat01.ai,悠兔'
+  - 'DOMAIN-SUFFIX,cool18.com,悠兔'
+  - 'DOMAIN-SUFFIX,poe.com,byhand_unsafe'
+  - 'DOMAIN-SUFFIX,bilibili.com,DIRECT'
+  - 'DOMAIN-KEYWORD,google,byhand_unsafe'
+  - 'DOMAIN-SUFFIX,huggingface.co,悠兔'
+  - 'DOMAIN-SUFFIX,openrouter.ai,byhand_unsafe'
+  - 'DOMAIN-SUFFIX,app.folo.is,悠兔'
+  - 'DOMAIN-SUFFIX,apple.com,DIRECT'
+  - 'DOMAIN-KEYWORD,bilibili,自动选择'
+  
+  # ==================== IP 规则 ====================
+  - 'IP-CIDR,3.144.198.189/32,DIRECT,no-resolve'
+  - 'IP-CIDR,192.183.3.0/24,DIRECT,no-resolve'
+  
+  # ==================== Rule-Set 规则 ====================
+  - 'RULE-SET,anthropic,链式代理'
+  - 'RULE-SET,OpenAI-Rules,byhand_unsafe'
+  
+  # ==================== 进程规则 (Windows 适配) ====================
+  # Antigravity - 指纹浏览器
+  - 'PROCESS-NAME,Antigravity.exe,链式代理webshare'
+  - 'PROCESS-NAME-REGEX,(?i).*antigravity.*,链式代理webshare'
+  
+  # Warp - 终端
+  - 'PROCESS-NAME,Warp.exe,悠兔'
+  - 'PROCESS-NAME-REGEX,(?i).*warp.*\.exe,悠兔'
+  
+  # Node.js / Claude CLI
+  - 'PROCESS-NAME,node.exe,链式代理'
+  - 'PROCESS-NAME,claude.exe,链式代理'
+  
+  # Claude 桌面应用
+  - 'PROCESS-NAME,Claude.exe,链式代理'
+  - 'PROCESS-NAME-REGEX,(?i).*claude.*\.exe,链式代理'
+  
+  # AdsPower - 指纹浏览器
+  - 'PROCESS-NAME,AdsPower.exe,链式代理'
+  - 'PROCESS-NAME,AdsPowerGlobal.exe,链式代理'
+  - 'PROCESS-NAME-REGEX,(?i).*adspower.*,链式代理'
+  
+  # Notion
+  - 'PROCESS-NAME,Notion.exe,自动选择'
+  - 'PROCESS-NAME-REGEX,(?i).*notion.*,自动选择'
+  
+  # ChatGPT 桌面应用
+  - 'PROCESS-NAME,ChatGPT.exe,byhand_unsafe'
+  - 'PROCESS-NAME-REGEX,(?i).*chatgpt.*,byhand_unsafe'
+  
+  # Grass
+  - 'PROCESS-NAME,Grass.exe,DIRECT'
+  - 'PROCESS-NAME-REGEX,(?i).*grass.*\.exe,DIRECT'
+
+append: []
+delete: []

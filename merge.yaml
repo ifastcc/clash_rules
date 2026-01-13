@@ -1,0 +1,61 @@
+# Clash Verge Merge 配置 - 跨平台通用
+# https://github.com/ifastcc/clash_rules
+
+profile:
+  store-selected: true
+
+dns:
+  enable: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - '*.lan'
+    - '*.local'
+    - '*.arpa'
+    - time.*.com
+    - ntp.*.com
+    - +.market.xiaomi.com
+    - localhost.ptlogin2.qq.com
+    - '*.msftncsi.com'
+    - www.msftconnecttest.com
+  default-nameserver:
+    - system
+    - 223.6.6.6
+    - 8.8.8.8
+  nameserver:
+    - 8.8.8.8
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  fallback:
+    - 114.114.114.114
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+      - 240.0.0.0/4
+      - 0.0.0.0/32
+    domain:
+      - +.google.com
+      - +.facebook.com
+      - +.youtube.com
+  proxy-server-nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  ipv6: true
+  use-hosts: false
+  use-system-hosts: false
+
+rule-providers:
+  OpenAI-Rules:
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml"
+    path: ./ruleset/OpenAI-Rules.yaml
+    interval: 86400
+  anthropic:
+    type: http
+    behavior: classical
+    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Anthropic/Anthropic.yaml"
+    path: ./ruleset/anthropic.yaml
+    interval: 86400

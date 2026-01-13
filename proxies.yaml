@@ -1,0 +1,44 @@
+# Clash Verge Proxies 配置 - 自定义代理节点
+# https://github.com/ifastcc/clash_rules
+
+prepend: []
+append:
+  # AWS SOCKS5 代理
+  - type: 'socks5'
+    name: 'aws'
+    server: '3.144.198.189'
+    port: 1080
+    udp: true
+    username: 'ifastcc'
+    password: 'cS1230-@sskrd!'
+  
+  # Webshare 住宅代理
+  - type: 'socks5'
+    name: 'webshare'
+    server: '45.56.128.12'
+    port: 5135
+    udp: true
+    username: 'vhlkomic'
+    password: '232rlbjboitg'
+  
+  # 链式代理 - Webshare 经由悠兔出口
+  - type: 'socks5'
+    name: '链式代理webshare'
+    server: '45.56.128.12'
+    port: 5135
+    udp: true
+    username: 'vhlkomic'
+    password: '232rlbjboitg'
+    dialer-proxy: '悠兔'
+  
+  # 链式代理 - AWS 经由自动选择出口
+  - type: 'socks5'
+    name: '链式代理'
+    server: '3.144.198.189'
+    port: 1080
+    udp: true
+    username: 'ifastcc'
+    password: 'cS1230-@sskrd!'
+    dialer-proxy: '自动选择'
+
+delete: []
