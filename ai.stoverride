@@ -23,18 +23,28 @@ proxy-groups:
 
 rules:
   ########################################################################
-  # ❶ Gemini / Google AI（走 专线-AI）
+  # ❶ Gemini / Google AI / NotebookLM（走 专线-AI）
   ########################################################################
   - DOMAIN-SUFFIX,teracloud.jp,专线-HK
   - DOMAIN-SUFFIX,quora.com,专线-AI
   - DOMAIN-SUFFIX,poe.com,专线-AI
   - DOMAIN-SUFFIX,poecdn.net,专线-AI
 
+  # NotebookLM
+  - DOMAIN-SUFFIX,notebooklm.google.com,专线-AI
+  - DOMAIN-SUFFIX,notebooklm.google,专线-AI
 
-
+  # Gemini / Google AI
   - DOMAIN-SUFFIX,gemini.google.com,专线-AI
   - DOMAIN-SUFFIX,generativelanguage.googleapis.com,专线-AI
   - DOMAIN-SUFFIX,cloudaicompanion.googleapis.com,专线-AI
+  - DOMAIN-SUFFIX,deepmind.com,专线-AI
+  - DOMAIN-SUFFIX,deepmind.google,专线-AI
+  - DOMAIN-SUFFIX,generativeai.google,专线-AI
+  - DOMAIN,ai.google.dev,专线-AI
+  - DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com,专线-AI
+  - DOMAIN,alkalimakersuite-pa.clients6.google.com,专线-AI
+  - DOMAIN,makersuite.google.com,专线-AI
 
   # 四大后缀 —— 全量 Google AI、Workspace、Drive、Search 等
   - DOMAIN-SUFFIX,googleapis.com,专线-AI
