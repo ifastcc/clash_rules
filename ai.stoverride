@@ -1,16 +1,21 @@
 # 文件名：ai.stoverride
-name: AI-专线规则
-desc: AI 与 港区 Streaming 各走其专线
+
+name: AI-双订阅兼容规则
+
+desc: 同时适配 悠兔 与 Flower_SS，AI 走 JP/SG/US，X/YouTube 走 HK
 
 proxy-groups:
-  # ==== AI: 日本/新加坡/美国 ====
+  # ==== AI: 日本 / 新加坡 / 美国 ====
   - name: 专线-AI
     type: select
     interval: 300
     include-all: true
     filter: >
-      (专线.*(日本|新加坡|美国|JP|Japan|SG|Singapore|US|United ?States))|
-      ((日本|新加坡|美国|JP|Japan|SG|Singapore|US|United ?States).*专线)
+      (^JP$)|(^SG$)|(^US$)|
+      ((专线|高速隧道).*(日本|新加坡|美国))|
+      (((日本|新加坡|美国).*(专线|隧道|IEPL|IPLC|GPT)))|
+      ((🇯🇵|🇸🇬|🇺🇸).*(日本|新加坡|美国|IEPL|IPLC|专线))|
+      (((Japan|Singapore|United ?States).*(IEPL|IPLC|Premium|Tunnel|GPT)))
 
   # ==== Streaming: 香港 ====
   - name: 专线-HK
@@ -18,17 +23,31 @@ proxy-groups:
     interval: 300
     include-all: true
     filter: >
-      (专线.*(香港|HK|Hong ?Kong))|
-      ((香港|HK|Hong ?Kong).*专线)
+      (^HK$)|
+      ((专线|高速隧道).*(香港))|
+      ((香港).*(专线|隧道|IEPL|IPLC))|
+      ((🇭🇰).*(香港|IEPL|IPLC|专线))|
+      (((Hong ?Kong).*(IEPL|IPLC|Premium|Tunnel)))
 
 rules:
   ########################################################################
-  # ❶ Gemini / Google AI / NotebookLM（走 专线-AI）
+  # ❶ OpenAI / Claude / Gemini / Google AI / NotebookLM（走 专线-AI）
   ########################################################################
-  - DOMAIN-SUFFIX,teracloud.jp,专线-HK
+  - DOMAIN-SUFFIX,openai.com,专线-AI
+  - DOMAIN-SUFFIX,chatgpt.com,专线-AI
+  - DOMAIN-SUFFIX,oaistatic.com,专线-AI
+  - DOMAIN-SUFFIX,oaiusercontent.com,专线-AI
+
+  - DOMAIN-SUFFIX,anthropic.com,专线-AI
+  - DOMAIN-SUFFIX,claude.ai,专线-AI
+  - DOMAIN-SUFFIX,claude.com,专线-AI
+  - DOMAIN-SUFFIX,claudeusercontent.com,专线-AI
+
   - DOMAIN-SUFFIX,quora.com,专线-AI
   - DOMAIN-SUFFIX,poe.com,专线-AI
   - DOMAIN-SUFFIX,poecdn.net,专线-AI
+  - DOMAIN-SUFFIX,openrouter.ai,专线-AI
+  - DOMAIN-SUFFIX,huggingface.co,专线-AI
 
   # NotebookLM
   - DOMAIN-SUFFIX,notebooklm.google.com,专线-AI
@@ -36,6 +55,7 @@ rules:
 
   # Gemini / Google AI
   - DOMAIN-SUFFIX,gemini.google.com,专线-AI
+  - DOMAIN-SUFFIX,aistudio.google.com,专线-AI
   - DOMAIN-SUFFIX,generativelanguage.googleapis.com,专线-AI
   - DOMAIN-SUFFIX,cloudaicompanion.googleapis.com,专线-AI
   - DOMAIN-SUFFIX,deepmind.com,专线-AI
@@ -46,47 +66,36 @@ rules:
   - DOMAIN,alkalimakersuite-pa.clients6.google.com,专线-AI
   - DOMAIN,makersuite.google.com,专线-AI
 
-  # 四大后缀 —— 全量 Google AI、Workspace、Drive、Search 等
+  # Google 相关兜底
   - DOMAIN-SUFFIX,googleapis.com,专线-AI
   - DOMAIN-SUFFIX,googleusercontent.com,专线-AI
   - DOMAIN-SUFFIX,gstatic.com,专线-AI
   - DOMAIN-SUFFIX,google.com,专线-AI
-
-  ########################################################################
-  # ❷ YouTube / Google Video（走 专线-HK）
-  ########################################################################
-  - DOMAIN-SUFFIX,youtube.com,专线-HK
-  - DOMAIN-SUFFIX,ytimg.com,专线-HK
-  - DOMAIN-SUFFIX,googlevideo.com,专线-HK
-  - DOMAIN-KEYWORD,youtube,专线-HK     # 兜底，匹配 youtu.be 等短链
-
-  ########################################################################
-  # ❸ X (Twitter)（走 专线-HK）
-  ########################################################################
-  - DOMAIN-SUFFIX,x.com,专线-HK
-  - DOMAIN-SUFFIX,t.co,专线-HK
-  - DOMAIN-SUFFIX,twimg.com,专线-HK
-
-  ########################################################################
-  # ❹ 其他常见 Google / CDN / 埋点（默认仍走 专线-AI，可按需调整）
-  ########################################################################
   - DOMAIN-SUFFIX,withgoogle.com,专线-AI
   - DOMAIN-SUFFIX,ggpht.com,专线-AI
   - DOMAIN-SUFFIX,googletagmanager.com,专线-AI
   - DOMAIN-SUFFIX,google-analytics.com,专线-AI
   - DOMAIN-SUFFIX,googlesyndication.com,专线-AI
   - DOMAIN-SUFFIX,doubleclick.net,专线-AI
-  - DOMAIN-SUFFIX,app-analytics-services.com,专线-AI
   - DOMAIN-SUFFIX,g.co,专线-AI
   - DOMAIN-SUFFIX,goo.gl,专线-AI
 
-  # （可选）中国区镜像域
-  - DOMAIN-SUFFIX,googleapis.cn,专线-AI
-  - DOMAIN-SUFFIX,gstatic.cn,专线-AI
-  - DOMAIN-SUFFIX,google.cn,专线-AI
+  ########################################################################
+  # ❷ YouTube / X（走 专线-HK）
+  ########################################################################
+  - DOMAIN-SUFFIX,youtube.com,专线-HK
+  - DOMAIN-SUFFIX,ytimg.com,专线-HK
+  - DOMAIN-SUFFIX,googlevideo.com,专线-HK
+  - DOMAIN-KEYWORD,youtube,专线-HK
 
+  - DOMAIN-SUFFIX,x.com,专线-HK
+  - DOMAIN-SUFFIX,twitter.com,专线-HK
+  - DOMAIN-SUFFIX,t.co,专线-HK
+  - DOMAIN-SUFFIX,twimg.com,专线-HK
+  - DOMAIN-SUFFIX,video.twimg.com,专线-HK
 
   ########################################################################
-  # ❺ 泛匹配兜底（如不想误伤，可关闭）
+  # ❸ 其他补充
   ########################################################################
+  - DOMAIN-SUFFIX,teracloud.jp,专线-HK
   - DOMAIN-KEYWORD,google,专线-AI
